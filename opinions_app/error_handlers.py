@@ -1,4 +1,4 @@
-from flask import render_template
+from flask import jsonify, render_template
 
 from . import app, db
 
@@ -20,6 +20,13 @@ class InvalidAPIUsage(Exception):
     # Метод для сериализации переданного сообщения об ошибке.
     def to_dict(self):
         return dict(message=self.message)
+
+
+# Обработчик кастомного исключения для API.
+@app.errorhandler(InvalidAPIUsage)
+def invalid_api_usage(error):
+    # Возвращает в ответе текст ошибки и статус-код.
+    return jsonify(error.to_dict()), error.status_code
 
 
 @app.errorhandler(404)

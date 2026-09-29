@@ -28,7 +28,7 @@ def update_opinion(id):
     opinion.text = data.get('text', opinion.text)
     opinion.source = data.get('source', opinion.source)
     opinion.added_by = data.get('added_by', opinion.added_by)
-    db.session.commit()  
+    db.session.commit()
     return jsonify({'opinion': opinion.to_dict()}), 201
 
 
