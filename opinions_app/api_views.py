@@ -70,4 +70,11 @@ def add_opinion():
 @app.route('/api/get-random-opinion/', methods=['GET'])
 def get_random_opinion():
     opinion = random_opinion()
-    return jsonify({'opinion': opinion.to_dict()}), 200
+    # Если мнение найдено (переменная opinion не равна None),
+    # оно возвращается в виде JSON-объекта с кодом ответа 200 (OK).
+    if opinion is not None:
+        return jsonify({'opinion': opinion.to_dict()}), 200
+    # Если мнение не найдено (opinion равен None),
+    # вызывается исключение InvalidAPIUsage с сообщением об ошибке
+    # и кодом ответа 404 (Not Found).
+    raise InvalidAPIUsage('В базе данных нет мнений', 404)
